@@ -16,9 +16,6 @@
         <nav class="site-nav">
           <ul>
             <li><a href="{{ '/' | url }}">Home</a></li>
-            <li><a href="{{ '/lessons/' | url }}">Lessons</a></li>
-            <li><a href="{{ '/resources/' | url }}">Resources</a></li>
-            <li><a href="{{ '/for-instructors/' | url }}">For Instructors</a></li>
             <li><a href="{{ '/about/' | url }}">About</a></li>
           </ul>
         </nav>
@@ -26,12 +23,18 @@
     </header>
 
     <main class="site-main">
-      <div class="container">{{ content | safe }}</div>
+      <div class="container">
+        {%- if content -%}
+          {{ content | safe }}
+        {%- else -%}
+          <p>No content found</p>
+        {%- endif -%}
+      </div>
     </main>
 
     <footer class="site-footer">
       <div class="container">
-        <p>&copy; {% year %} {{ site.author }}. All rights reserved.</p>
+        <p>&copy; {% year %} {{ site.author or "Glowe" }}. All rights reserved.</p>
       </div>
     </footer>
 

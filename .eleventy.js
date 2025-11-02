@@ -4,9 +4,7 @@ module.exports = function (eleventyConfig) {
   // Add sitemap plugin
   eleventyConfig.addPlugin(sitemap, {
     sitemap: {
-      hostname:
-        process.env.SITE_URL ||
-        'https://kaw393939.github.io/is117_ai_test_practice',
+      hostname: process.env.SITE_URL || 'https://mhk42.github.io/glowe-web',
     },
   });
 
@@ -32,7 +30,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addShortcode('year', () => `${new Date().getFullYear()}`);
 
   return {
-    pathPrefix: '/',
+    pathPrefix: '/glowe-web/',
     dir: {
       input: 'src',
       output: '_site',

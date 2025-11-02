@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kaw393939.github.io/is117_ai_test_practice/sitemap.xml
+Sitemap: https://mhk42.github.io/glowe-web/sitemap.xml
