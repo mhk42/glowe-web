@@ -14,6 +14,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/assets/images');
   eleventyConfig.addPassthroughCopy('src/robots.txt');
 
+  // Copy everything again but under glowe-web/ for GitHub Pages
+  eleventyConfig.addPassthroughCopy({ 'src/assets': 'glowe-web/assets' });
+
   // Watch CSS files for changes
   eleventyConfig.addWatchTarget('src/assets/css/');
 
