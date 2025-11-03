@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glowe Skincare - Traditional Hanbang Inspired Beauty</title>
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Custom Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --color-cream: #f9f6f1; /* Soft, warm cream background */
+        --color-text-dark: #333333;
+        --color-accent: #a59e87; /* Subtle, muted gold/brass accent */
+        --font-serif: 'Lora', serif; /* Elegant serif for headings/titles */
+        --font-sans: 'Inter', sans-serif; /* Clean sans-serif for body */
+      }
+
+      body {
+        font-family: var(--font-sans);
+        color: var(--color-text-dark);
+        background-color: var(--color-cream);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-serif);
+      }
+
+      /* Navigation Links Hover Effect */
+      .header-nav-link {
+        transition: color 0.2s;
+        cursor: pointer;
+      }
+      .header-nav-link:hover {
+        color: var(--color-accent);
+      }
+
+      /* Product Card Hover Effect */
+      .product-card {
+        transition:
+          transform 0.3s ease-in-out,
+          box-shadow 0.3s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow:
+          0 10px 15px -3px rgba(0, 0, 0, 0.05),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Journal Post Card */
+      .journal-card {
+        transition: box-shadow 0.3s ease;
+      }
+      .journal-card:hover {
+        box-shadow: 0 8px 10px -1px rgba(0, 0, 0, 0.05);
+      }
+
+      .page-header {
+        font-family: var(--font-serif);
+        font-weight: 300;
+      }
+
+      /* Style for active filter tab */
+      .active-filter {
+        color: var(--color-accent) !important;
+        border-color: var(--color-accent) !important;
+        font-weight: 600;
+      }
+
+      /* --- Product Transition --- */
+      .product-item {
+        /* Transition opacity and transform */
+        transition:
+          opacity 0.4s ease-out,
+          transform 0.4s ease-out;
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Start Layout Wrapper -->
+    <div class="min-h-screen flex flex-col">
+      <!-- Header/Navigation -->
+      <header class="py-6 border-b border-gray-200 sticky top-0 bg-white z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <!-- Logo -->
+          <a
+            href="#home"
+            onclick="renderPage('home')"
+            class="text-4xl font-serif font-light tracking-wider text-gray-800 cursor-pointer"
+          >
+            Glowe
+          </a>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+            <a href="#shop" onclick="renderPage('shop')" class="header-nav-link text-gray-700">Shop</a>
+            <a href="#story" onclick="renderPage('story')" class="header-nav-link text-gray-700">Our Story</a>
+            <a href="#ingredients" onclick="renderPage('ingredients')" class="header-nav-link text-gray-700"
+              >Ingredients</a
+            >
+            <a href="#journal" onclick="renderPage('journal')" class="header-nav-link text-gray-700">Journal</a>
+            <a href="#contact" onclick="renderPage('contact')" class="header-nav-link text-gray-700">Contact</a>
+          </nav>
+
+          <!-- Icons (Placeholder) -->
+          <div class="flex items-center space-x-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-gray-700 cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-gray-700 cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area - Dynamic Content Injection -->
+      <main class="flex-grow">
+        <div id="app" class="markdown-content">
+          <!-- Content will be rendered here by JavaScript -->
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-gray-100 py-12 mt-16 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+          <div class="col-span-2 md:col-span-1">
+            <h3 class="text-xl font-serif font-light mb-4">Glowe</h3>
+            <p class="text-gray-600">Inspired by Korean traditions, crafted for the modern individual.</p>
+          </div>
+
+          <!-- Footer Nav 1 -->
+          <div>
+            <h4 class="font-semibold uppercase mb-3 tracking-wider">Shop</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li><a href="#shop" onclick="renderPage('shop')" class="hover:text-gray-800">Cleansers</a></li>
+              <li><a href="#shop" onclick="renderPage('shop')" class="hover:text-gray-800">Serums</a></li>
+              <li><a href="#shop" onclick="renderPage('shop')" class="hover:text-gray-800">Moisturizers</a></li>
+              <li><a href="#shop" onclick="renderPage('shop')" class="hover:text-gray-800">Value Sets</a></li>
+            </ul>
+          </div>
+
+          <!-- Footer Nav 2 -->
+          <div>
+            <h4 class="font-semibold uppercase mb-3 tracking-wider">Company</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li><a href="#story" onclick="renderPage('story')" class="hover:text-gray-800">About Us</a></li>
+              <li>
+                <a href="#ingredients" onclick="renderPage('ingredients')" class="hover:text-gray-800"
+                  >Our Ingredients</a
+                >
+              </li>
+              <li><a href="#" class="hover:text-gray-800">Sustainability</a></li>
+              <li><a href="#" class="hover:text-gray-800">Careers</a></li>
+            </ul>
+          </div>
+
+          <!-- Footer Nav 3 -->
+          <div>
+            <h4 class="font-semibold uppercase mb-3 tracking-wider">Support</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li><a href="#" class="hover:text-gray-800">FAQ</a></li>
+              <li><a href="#" class="hover:text-gray-800">Shipping & Returns</a></li>
+              <li><a href="#" class="hover:text-gray-800">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="font-semibold uppercase mb-3 tracking-wider">Join Our Newsletter</h4>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              class="w-full p-2 border border-gray-300 rounded-md bg-white text-sm focus:ring-0 focus:border-gray-500"
+            />
+            <button
+              class="mt-2 w-full py-2 bg-gray-800 text-white text-xs uppercase tracking-widest rounded-md hover:bg-gray-700 transition duration-300"
+            >
+              Subscribe
+            </button>
+          </div>
+        </div>
+        <div class="mt-8 text-center text-xs text-gray-500 border-t border-gray-200 pt-6">
+          &copy; 2025 Glowe Skincare. All rights reserved.
+        </div>
+      </footer>
+    </div>
+    <!-- End Layout Wrapper -->
+
+    <!-- JavaScript for Page Rendering/Routing and Filtering -->
+    <script>
+      const app = document.getElementById('app');
+
+      // =======================================================
+      // PRODUCT FILTERING LOGIC (With Robust Animation Fix)
+      // =======================================================
+
+      /**
+       * Filters the products displayed on the Shop page based on the selected category.
+       * FIX: Uses element.offsetWidth to force a browser reflow, ensuring the transition
+       * is correctly triggered even for products already visible (e.g., transitioning
+       * from 'all' to a specific category).
+       * @param {string} category - The category key (e.g., 'cleanser', 'serum', 'all').
+       */
+      function filterProducts(category) {
+        // 1. Manage Active Filter Styling (Unchanged)
+        const filters = document.querySelectorAll('.category-filter');
+        filters.forEach((f) => {
+          f.classList.remove('active-filter', 'border-gray-800', 'text-gray-800', 'font-semibold');
+          f.classList.add('text-gray-500', 'hover:text-gray-800', 'border-transparent', 'hover:border-gray-300');
+        });
+
+        const activeFilter = document.querySelector(`#filter-${category}`);
+        if (activeFilter) {
+          activeFilter.classList.add('active-filter', 'border-gray-800', 'text-gray-800', 'font-semibold');
+          activeFilter.classList.remove(
+            'text-gray-500',
+            'hover:text-gray-800',
+            'border-transparent',
+            'hover:border-gray-300'
+          );
+        }
+
+        // 2. Manage Product Visibility and Smooth Transition
+        const products = document.querySelectorAll('.product-item');
+
+        products.forEach((product) => {
+          const isMatch = category === 'all' || product.classList.contains('category-' + category);
+
+          if (isMatch) {
+            // SHOW product: Force the animation sequence.
+
+            // 1. Ensure it participates in layout immediately
+            product.style.display = 'block';
+
+            // 2. Set the starting transition state (instant visually hidden state)
+            product.style.opacity = '0';
+            product.style.transform = 'scale(0.95)';
+
+            // 3. CRITICAL FIX: Force Reflow. Reading this property makes the browser
+            // calculate the layout immediately, locking in the 'opacity: 0' state.
+            // This is necessary to trigger the CSS transition correctly.
+            void product.offsetWidth;
+
+            // 4. Set the final transition state (browser now transitions smoothly from 0 to 1)
+            product.style.opacity = '1';
+            product.style.transform = 'scale(1)';
+          } else {
+            // HIDE product: (Instant layout fix)
+
+            // Set end visual state
+            product.style.opacity = '0';
+            product.style.transform = 'scale(0.95)';
+
+            // Instantly remove it from the document flow
+            product.style.display = 'none';
+          }
+        });
+      }
+
+      // =======================================================
+      // PAGE CONTENT DEFINITIONS (Unchanged)
+      // =======================================================
+
+      const pageContents = {
+        home: `
+                <!-- Home Page Content -->
+                <section class="py-24 md:py-32 bg-gray-50/50 text-center border-b border-gray-200">
+                    <div class="max-w-4xl mx-auto px-6">
+                        <p class="text-lg text-gray-500 uppercase tracking-widest mb-4 font-medium">Timeless Rituals, Modern Serenity</p>
+                        <h1 class="page-header text-6xl md:text-8xl font-light text-gray-800">
+                            The Wisdom of Hanbang for Your Daily Glow
+                        </h1>
+                        <p class="mt-8 text-xl text-gray-600 max-w-2xl mx-auto">
+                            Inspired by the gentle, effective skincare secrets of the Joseon Dynasty, Glowe honors tradition using clean, natural ingredients harmonized with modern science.
+                        </p>
+                        <a href="#shop" onclick="renderPage('shop')" class="mt-12 inline-block px-10 py-3 text-sm font-semibold uppercase tracking-widest border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition duration-300">
+                            Explore Our Collection
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Featured Product Grid -->
+                <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="page-header text-4xl font-light text-center mb-16">The Essential Collection</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        <!-- Product 1: Rice Water Cleansing Balm -->
+                        <div class="product-card text-center p-6 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Rice+Cleanser" alt="Rice Water Cleansing Balm" class="w-full h-auto object-cover mb-4 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-2xl font-normal mt-4">Calm Rice Water Cleansing Balm</h3>
+                            <p class="text-gray-500 text-sm mt-2">Removes impurities gently, leaving skin soft.</p>
+                            <span class="inline-block mt-3 text-lg font-medium text-gray-800">$22.00</span>
+                            <button class="mt-4 w-full py-2 text-sm uppercase tracking-wider bg-gray-800 text-white rounded-md hover:bg-gray-700 transition duration-300">
+                                View Product
+                            </button>
+                        </div>
+
+                        <!-- Product 2: Ginseng Renewal Serum -->
+                        <div class="product-card text-center p-6 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Ginseng+Serum" alt="Ginseng Renewal Serum" class="w-full h-auto object-cover mb-4 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-2xl font-normal mt-4">Dynasty Ginseng Renewal Serum</h3>
+                            <p class="text-gray-500 text-sm mt-2">A luxurious serum for firmness and vitality.</p>
+                            <span class="inline-block mt-3 text-lg font-medium text-gray-800">$35.00</span>
+                            <button class="mt-4 w-full py-2 text-sm uppercase tracking-wider bg-gray-800 text-white rounded-md hover:bg-gray-700 transition duration-300">
+                                View Product
+                            </button>
+                        </div>
+
+                        <!-- Product 3: Green Tea Moisturizer -->
+                        <div class="product-card text-center p-6 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Green+Tea+Cream" alt="Green Tea Aqua Moisturizer" class="w-full h-auto object-cover mb-4 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-2xl font-normal mt-4">Aquaa Green Tea Relief Cream</h3>
+                            <p class="text-gray-500 text-sm mt-2">Lightweight hydration that soothes and calms.</p>
+                            <span class="inline-block mt-3 text-lg font-medium text-gray-800">$28.00</span>
+                            <button class="mt-4 w-full py-2 text-sm uppercase tracking-wider bg-gray-800 text-white rounded-md hover:bg-gray-700 transition duration-300">
+                                View Product
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Our Philosophy Section -->
+                <section class="bg-white py-20 border-t border-gray-200">
+                    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <h2 class="page-header text-4xl font-light text-gray-800">The Glowe Philosophy</h2>
+                            <p class="text-lg text-gray-600">
+                                Skincare should be a ritual of reverence, not a chore. We believe in simplifying the routine without compromising efficacy. Our formulas rely on 'Hanbang' ingredients—traditional Korean herbal medicine—known for their inherent strength and purity.
+                            </p>
+                            <p class="text-gray-500 italic">
+                                "Beauty is not about masking, but nurturing the skin's inherent light."
+                            </p>
+                            <a href="#story" onclick="renderPage('story')" class="inline-block mt-4 text-sm font-semibold uppercase tracking-widest text-gray-800 hover:text-gray-600 transition duration-300 border-b-2 border-transparent hover:border-gray-800 pb-1">
+                                Read Our Full Story
+                            </a>
+                        </div>
+                        <img src="https://placehold.co/600x400/e8e4dc/a59e87?text=Minimalist+Bottle" alt="Minimalist bottle on a stone" class="rounded-lg shadow-lg">
+                    </div>
+                </section>
+            `,
+        shop: `
+                <!-- Shop Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">The Complete Glowe Collection</h1>
+                    <p class="text-lg text-gray-600 font-serif font-light">Discover Hanbang wisdom, categorized by the step of your ritual.</p>
+                </header>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <!-- Category Navigation/Filter Buttons -->
+                    <div class="flex justify-center space-x-6 mb-12 text-sm font-medium uppercase tracking-widest">
+                        <!-- 'all' filter is active by default on load/re-render -->
+                        <span onclick="filterProducts('all')" class="category-filter text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-gray-300 pb-1 cursor-pointer" data-category="all" id="filter-all">All Products (9)</span>
+                        <span onclick="filterProducts('cleanser')" class="category-filter text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-gray-300 pb-1 cursor-pointer" data-category="cleanser" id="filter-cleanser">Cleansers</span>
+                        <span onclick="filterProducts('serum')" class="category-filter text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-gray-300 pb-1 cursor-pointer" data-category="serum" id="filter-serum">Serums & Toners</span>
+                        <span onclick="filterProducts('moisturizer')" class="category-filter text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-gray-300 pb-1 cursor-pointer" data-category="moisturizer" id="filter-moisturizer">Moisturizers</span>
+                    </div>
+
+                    <!-- Product Grid (All products now have category classes) -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8" id="product-grid">
+
+                        <!-- Product 1: Cleansing Balm (Cleanser) -->
+                        <div class="product-card product-item category-cleanser text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Rice+Cleanser" alt="Cleansing Balm" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Calm Rice Water Balm</h3>
+                            <p class="text-gray-500 text-xs mt-1">Cleansing / 100ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$22.00</span>
+                        </div>
+
+                        <!-- Product 2: Essence Toner (Serum/Prep) -->
+                        <div class="product-card product-item category-serum text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Plum+Toner" alt="Plum Essence Toner" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Plum Blossom Essence Toner</h3>
+                            <p class="text-gray-500 text-xs mt-1">Prep / 150ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$18.00</span>
+                        </div>
+
+                        <!-- Product 3: Serum 1 (Serum) -->
+                        <div class="product-card product-item category-serum text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Ginseng+Serum" alt="Ginseng Serum" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Dynasty Ginseng Serum</h3>
+                            <p class="text-gray-500 text-xs mt-1">Revitalization / 30ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$35.00</span>
+                        </div>
+
+                        <!-- Product 4: Moisturizer 1 (Moisturizer) -->
+                        <div class="product-card product-item category-moisturizer text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Green+Tea+Cream" alt="Green Tea Moisturizer" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Aquaa Green Tea Relief Cream</h3>
+                            <p class="text-gray-500 text-xs mt-1">Soothing / 50ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$28.00</span>
+                        </div>
+
+                        <!-- Product 5: Oil Cleanser (Cleanser) -->
+                        <div class="product-card product-item category-cleanser text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Herb+Oil" alt="Oil Cleanser" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Gentle Herb Cleansing Oil</h3>
+                            <p class="text-gray-500 text-xs mt-1">Cleansing / 150ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$20.00</span>
+                        </div>
+
+                        <!-- Product 6: Serum 2 (Serum) -->
+                        <div class="product-card product-item category-serum text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Snail+Serum" alt="Snail Mucin Serum" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Snail Mucin Repair Serum</h3>
+                            <p class="text-gray-500 text-xs mt-1">Barrier Care / 30ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$32.00</span>
+                        </div>
+
+                        <!-- Product 7: Sunscreen (Moisturizer/Protectant) -->
+                        <div class="product-card product-item category-moisturizer text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Sun+Relief" alt="Sun Relief" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Matte Sun Relief SPF 50+</h3>
+                            <p class="text-gray-500 text-xs mt-1">Protection / 50ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$17.00</span>
+                        </div>
+
+                        <!-- Product 8: Eye Cream (Serum/Targeted) -->
+                        <div class="product-card product-item category-serum text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Eye+Cream" alt="Eye Cream" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Retinal Eye Treatment</h3>
+                            <p class="text-gray-500 text-xs mt-1">Targeted Care / 20ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$25.00</span>
+                        </div>
+
+                         <!-- Product 9: Sleeping Mask (Moisturizer) -->
+                        <div class="product-card product-item category-moisturizer text-center p-4 bg-white rounded-lg shadow-sm">
+                            <img src="https://placehold.co/400x400/f9f6f1/a59e87?text=Barrier+Mask" alt="Sleeping Mask" class="w-full h-auto object-cover mb-3 rounded-lg border border-gray-100">
+                            <h3 class="page-header text-lg font-normal">Repair Sleeping Mask</h3>
+                            <p class="text-gray-500 text-xs mt-1">Overnight Care / 80ml</p>
+                            <span class="inline-block mt-2 text-base font-medium text-gray-800">$30.00</span>
+                        </div>
+
+                    </div>
+                </div>
+            `,
+        story: `
+                <!-- Our Story Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">A Legacy of Gentle Care</h1>
+                    <p class="text-xl text-gray-600 font-serif font-light">Where traditional Hanbang meets modern-day skincare science.</p>
+                </header>
+
+                <div class="max-w-5xl mx-auto px-6 space-y-12">
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center border-t border-gray-200 pt-12">
+                        <div>
+                            <h2 class="page-header text-3xl font-normal text-gray-800 mb-4">The Joseon Inspiration</h2>
+                            <p class="text-lg text-gray-600">
+                                Glowe was born from a deep respect for the beauty rituals of the **Joseon Dynasty**, a period in Korean history marked by intellectual refinement and artistic grace. The women of that era perfected their skincare using gentle, natural elements—rice water, green tea, and ginseng—believing that true beauty comes from balanced health.
+                            </p>
+                            <p class="text-lg text-gray-600 mt-4">
+                                We draw from these time-tested secrets, focusing on ingredients that are both potent and soothing, ensuring that every product feels like a calm, luxurious ritual.
+                            </p>
+                        </div>
+                        <img src="https://placehold.co/600x400/f0eade/a59e87?text=Traditional+Art" alt="Traditional Korean Art Inspiration" class="rounded-lg shadow-lg">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center pt-12">
+                        <img src="https://placehold.co/600x400/f0eade/a59e87?text=Modern+Science" alt="Modern lab tools" class="rounded-lg shadow-lg order-2 md:order-1">
+                        <div class="order-1 md:order-2">
+                            <h2 class="page-header text-3xl font-normal text-gray-800 mb-4">Purity & Efficacy</h2>
+                            <p class="text-lg text-gray-600">
+                                While our heart is in Hanbang tradition, our process is entirely modern. We use rigorous scientific methods to extract the purest compounds from our natural sources, formulating products that are **free of harmful additives** and highly effective on sensitive skin.
+                            </p>
+                            <p class="text-lg text-gray-600 mt-4">
+                                Glowe is committed to simple, honest formulations that build skin resilience over time, not just offer temporary fixes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `,
+        ingredients: `
+                <!-- Ingredients Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">Ingredients Rooted in Tradition</h1>
+                    <p class="text-lg text-gray-600 font-serif font-light">Our clean, ethical formulas rely on potent herbal medicine ('Hanbang') ingredients for holistic skin health.</p>
+                </header>
+
+                <div class="max-w-4xl mx-auto px-6 space-y-10">
+
+                    <!-- Ingredient Card 1: Rice -->
+                    <div class="grid md:grid-cols-3 gap-6 py-6 border-b border-gray-200 items-start">
+                        <div class="md:col-span-1">
+                            <h2 class="page-header text-2xl font-normal text-gray-800">Rice Bran Water</h2>
+                            <p class="text-sm uppercase tracking-widest text-gray-500 mt-1">ORYZA SATIVA</p>
+                        </div>
+                        <div class="md:col-span-2 text-gray-600">
+                            <p><strong class="font-semibold">Function:</strong> Brightening, moisturizing, and gentle exfoliation.</p>
+                            <p class="mt-2">Used for centuries by Korean women to soften and brighten the complexion. It is rich in vitamins E and B, antioxidants, and ceramides that strengthen the skin barrier and promote a translucent glow.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ingredient Card 2: Ginseng -->
+                    <div class="grid md:grid-cols-3 gap-6 py-6 border-b border-gray-200 items-start">
+                        <div class="md:col-span-1">
+                            <h2 class="page-header text-2xl font-normal text-gray-800">Ginseng Root</h2>
+                            <p class="text-sm uppercase tracking-widest text-gray-500 mt-1">PANAX GINSENG</p>
+                        </div>
+                        <div class="md:col-span-2 text-gray-600">
+                            <p><strong class="font-semibold">Function:</strong> Anti-aging, circulation, and collagen support.</p>
+                            <p class="mt-2">Known as the 'Root of Immortality' in traditional medicine. Ginseng increases circulation, improves elasticity, and helps smooth the appearance of fine lines by supporting overall skin vitality and energy.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ingredient Card 3: Green Tea -->
+                    <div class="grid md:grid-cols-3 gap-6 py-6 border-b border-gray-200 items-start">
+                        <div class="md:col-span-1">
+                            <h2 class="page-header text-2xl font-normal text-gray-800">Green Tea Leaf</h2>
+                            <p class="text-sm uppercase tracking-widest text-gray-500 mt-1">CAMELLIA SINENSIS</p>
+                        </div>
+                        <div class="md:col-span-2 text-gray-600">
+                            <p><strong class="font-semibold">Function:</strong> Soothing, antioxidant, and anti-inflammatory.</p>
+                            <p class="mt-2">A powerful source of polyphenols and EGCG, Green Tea calms irritation, reduces redness, and provides strong protection against environmental aggressors. Ideal for stressed and sensitive skin.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ingredient Card 4: Mugwort -->
+                    <div class="grid md:grid-cols-3 gap-6 py-6 border-b border-gray-200 items-start">
+                        <div class="md:col-span-1">
+                            <h2 class="page-header text-2xl font-normal text-gray-800">Mugwort Extract</h2>
+                            <p class="text-sm uppercase tracking-widest text-gray-500 mt-1">ARTEMISIA VULGARIS</p>
+                        </div>
+                        <div class="md:col-span-2 text-gray-600">
+                            <p><strong class="font-semibold">Function:</strong> Detoxifying, soothing, and repairing damaged skin.</p>
+                            <p class="mt-2">A versatile herb known for its purifying properties. It’s particularly effective in relieving and strengthening sensitive or troubled skin while providing deep, non-greasy hydration.</p>
+                        </div>
+                    </div>
+
+                </div>
+            `,
+        journal: `
+                <!-- Journal Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">The Glowe Journal</h1>
+                    <p class="text-lg text-gray-600 font-serif font-light">Skincare wisdom, Hanbang history, and ritual inspiration from our editors.</p>
+                </header>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div class="grid md:grid-cols-3 gap-8">
+
+                        <!-- Article 1 -->
+                        <a href="#" class="journal-card block bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                            <img src="https://placehold.co/600x400/e8e4dc/a59e87?text=Ginseng+Image" alt="Image of Ginseng roots" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Hanbang Heritage</p>
+                                <h3 class="page-header text-xl font-normal text-gray-800 mb-2 hover:underline">Why Ginseng is the King of Korean Skincare</h3>
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    Diving deep into the powerful adaptogenic properties of Ginseng and how it's used to revitalize and strengthen the skin barrier. Discover the ancient secrets...
+                                </p>
+                            </div>
+                        </a>
+
+                        <!-- Article 2 -->
+                        <a href="#" class="journal-card block bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                            <img src="https://placehold.co/600x400/e8e4dc/a59e87?text=Rice+Water+Process" alt="Image of Rice water process" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Ritual & Routine</p>
+                                <h3 class="page-header text-xl font-normal text-gray-800 mb-2 hover:underline">The 5-Minute Morning Routine for Lasting Glow</h3>
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    You don't need ten steps. We show you how to maximize hydration and protection in a simple, mindful morning ritual that fits your busy life.
+                                </p>
+                            </div>
+                        </a>
+
+                        <!-- Article 3 -->
+                        <a href="#" class="journal-card block bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                            <img src="https://placehold.co/600x400/e8e4dc/a59e87?text=Bottle+Detail" alt="Close up on skincare bottle" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Ingredient Deep Dive</p>
+                                <h3 class="page-header text-xl font-normal text-gray-800 mb-2 hover:underline">Understanding Snail Mucin's Repairing Power</h3>
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    Often misunderstood, Snail Secretion Filtrate is a powerhouse of healing proteins, hyaluronic acid, and glycolic acid. We break down the science...
+                                </p>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            `,
+        contact: `
+                <!-- Contact Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">Connect with Glowe</h1>
+                    <p class="text-lg text-gray-600 font-serif font-light">We're here to help you cultivate your perfect ritual. Reach out to us.</p>
+                </header>
+
+                <div class="max-w-4xl mx-auto px-6 grid md:grid-cols-3 gap-12 pt-10">
+
+                    <!-- Contact Details -->
+                    <div class="space-y-6 text-center md:text-left md:col-span-1">
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-semibold uppercase tracking-wider">Customer Care</h3>
+                            <p class="text-gray-600">hello@gloweskincare.com</p>
+                            <p class="text-gray-600">(+1) 555-GLOWE (45693)</p>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-semibold uppercase tracking-wider">Press & Media</h3>
+                            <p class="text-gray-600">media@gloweskincare.com</p>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-semibold uppercase tracking-wider">Office Hours</h3>
+                            <p class="text-gray-600">Mon - Fri: 9:00 AM - 5:00 PM EST</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="md:col-span-2 bg-white p-8 rounded-lg shadow-xl border border-gray-100">
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-md focus:border-gray-500 focus:ring-0">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-md focus:border-gray-500 focus:ring-0">
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full p-3 border border-gray-300 rounded-md focus:border-gray-500 focus:ring-0">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:border-gray-500 focus:ring-0"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-gray-800 text-white text-sm font-semibold uppercase tracking-widest rounded-md hover:bg-gray-700 transition duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            `,
+      };
+
+      // =======================================================
+      // PAGE RENDERING AND INITIAL LOAD LOGIC
+      // =======================================================
+
+      /**
+       * Renders the specified page content into the main application div.
+       * @param {string} pageKey - The key of the page content to load.
+       */
+      function renderPage(pageKey) {
+        const content = pageContents[pageKey];
+        if (content) {
+          app.innerHTML = content;
+          window.scrollTo(0, 0); // Scroll to top on page change
+          history.pushState(null, null, `#${pageKey}`);
+
+          if (pageKey === 'shop') {
+            // Ensures the filter is set to 'All Products' immediately after rendering the grid.
+            // Needs a slight delay to ensure all products are rendered in the DOM first.
+            setTimeout(() => {
+              filterProducts('all');
+            }, 0);
+          }
+        } else {
+          app.innerHTML = '<div class="text-center py-20 text-xl text-red-500">Page not found.</div>';
+        }
+      }
+
+      // --- Initial Load Logic ---
+
+      window.onload = function () {
+        let initialPage = 'home';
+        if (window.location.hash) {
+          const hashKey = window.location.hash.substring(1);
+          if (pageContents[hashKey]) {
+            initialPage = hashKey;
+          }
+        }
+        renderPage(initialPage);
+      };
+    </script>
+  </body>
+</html>

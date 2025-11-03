@@ -1,439 +1,59 @@
-/* Base Styles */
-:root {
-  --color-primary: #06c;
-  --color-secondary: #333;
-  --color-text: #444;
-  --color-background: #fff;
-  --color-border: #ddd;
-  --max-width: 1200px;
-  --spacing: 1rem;
-}
+/* ---------------------------------------------------- */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* Custom styles simulating main.css and the Beauty of Joseon aesthetic */
+
+/* ---------------------------------------------------- */
+
+:root {
+  --color-cream: #f9f6f1; /* Soft, warm cream background */
+  --color-text-dark: #333;
+  --color-accent: #a59e87; /* Subtle, muted gold/brass accent */
+  --font-serif: 'Lora', serif; /* Elegant serif for headings/titles */
+  --font-sans: 'Inter', sans-serif; /* Clean sans-serif for body */
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family:
-    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu,
-    cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-background);
+  font-family: var(--font-sans);
+  color: var(--color-text-dark);
+  background-color: var(--color-cream);
 }
 
-/* Container */
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing);
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
 }
 
-/* Header */
-.site-header {
-  background-color: var(--color-secondary);
-  color: #fff;
-  padding: 1.5rem 0;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+/* Navigation Links Hover Effect */
+.header-nav-link {
+  transition: color 0.2s;
 }
 
-.site-title {
-  margin: 0 0 1rem;
-  font-size: 1.75rem;
+.header-nav-link:hover {
+  color: var(--color-accent);
 }
 
-.site-title a {
-  color: #fff;
-  text-decoration: none;
+/* Product Card Hover Effect */
+.product-card {
+  transition: transform 0.3s ease-in-out;
 }
 
-.site-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.site-nav a {
-  color: #fff;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-/* Audience Cards */
-.audience-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
-.audience-card {
-  background: var(--color-bg);
-  padding: 2rem;
-  border: 2px solid var(--color-border);
-  border-radius: 8px;
-}
-
-.audience-card h3 {
-  margin-top: 0;
-  color: var(--color-secondary);
-}
-
-.audience-card a {
-  display: inline-block;
-  margin-top: 1rem;
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.audience-card a:hover {
-  text-decoration: underline;
-}
-
-.site-nav a:hover {
-  opacity: 0.8;
-}
-
-/* Main Content */
-.site-main {
-  min-height: 60vh;
-  padding: 2rem 0;
-}
-
-.page-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--color-border);
-}
-
-.page-header h1 {
-  margin: 0 0 0.5rem;
-  color: var(--color-secondary);
-}
-
-.lead {
-  font-size: 1.25rem;
-  color: var(--color-text);
-  margin: 0;
-}
-
-/* Hero Section */
-.hero {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  border-radius: 8px;
-  margin-bottom: 3rem;
-}
-
-.hero h2 {
-  margin: 0 0 1rem;
-  font-size: 2.5rem;
-}
-
-.hero p {
-  font-size: 1.25rem;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.btn-primary {
-  background-color: #fff;
-  color: #667eea;
-}
-
-.btn-primary:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid #fff;
-}
-
-.btn-secondary:hover {
-  background-color: rgb(255 255 255 / 10%);
-}
-
-.btn-large {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-}
-
-/* CTA Box */
-.cta-box {
-  margin: 2rem 0;
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.cta-box .btn {
-  margin: 0.5rem;
-}
-
-/* Features */
-.features {
-  margin-bottom: 3rem;
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.feature-card {
-  padding: 1.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.feature-card:hover {
+.product-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 5%),
+    0 4px 6px -2px rgb(0 0 0 / 5%);
 }
 
-.feature-card h3 {
-  margin: 0 0 0.5rem;
-  color: var(--color-secondary);
-}
-
-/* Content Section */
-.content {
-  max-width: 800px;
-}
-
-.content h2 {
-  margin-top: 2rem;
-  color: var(--color-secondary);
-}
-
-.content h3 {
-  margin-top: 1.5rem;
-  color: var(--color-secondary);
-}
-
-.content ul {
-  line-height: 1.8;
-}
-
-.content code {
-  background-color: #f4f4f4;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9em;
-}
-
-/* Info Sections */
-.course-info,
-.who-for,
-.quick-start {
-  margin-bottom: 3rem;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.info-box {
-  padding: 1.5rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid var(--color-primary);
-}
-
-.info-box h3 {
-  margin-top: 0;
-  color: var(--color-primary);
-}
-
-/* Lesson List */
-.lesson-list {
-  margin: 2rem 0;
-}
-
-.lesson-list h4 {
-  color: var(--color-secondary);
-  margin-bottom: 0.5rem;
-}
-
-.lesson-list strong {
-  color: var(--color-primary);
-}
-
-/* Resource Sections */
-.resource-section {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-.resource-section h3 {
-  margin-top: 0;
-  color: var(--color-primary);
-}
-
-.resource-section ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.resource-section li {
-  margin: 0.5rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.resource-section li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--color-primary);
-  font-weight: bold;
-}
-
-/* Activity List */
-.activity-list h3 {
-  color: var(--color-primary);
-  margin-top: 2rem;
-}
-
-/* Tool Grid */
-.tool-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.tool-grid h3 {
-  margin-top: 0;
-  color: var(--color-primary);
-  font-size: 1rem;
-}
-
-.tool-grid ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 0.9rem;
-}
-
-/* Tips Grid */
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 1.5rem;
-}
-
-.tips-grid h3 {
-  margin-top: 0;
-}
-
-.tips-grid ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.tips-grid li {
-  margin: 0.5rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.tips-grid li::before {
-  position: absolute;
-  left: 0;
-  font-weight: bold;
-}
-
-/* Lecture Grid */
-.lecture-grid {
-  display: grid;
-  gap: 2rem;
-  margin-top: 1.5rem;
-}
-
-.lecture-grid h3 {
-  color: var(--color-primary);
-  margin-bottom: 0.5rem;
-}
-
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-  padding: 1.5rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-/* Footer */
-.site-footer {
-  background-color: var(--color-secondary);
-  color: #fff;
-  padding: 2rem 0;
-  margin-top: 4rem;
+/* Markdown H1 Styling (for content generated from markdown) */
+.markdown-content h1 {
+  font-size: 3rem; /* 48px */
+  line-height: 1.1;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-.site-footer p {
-  margin: 0;
-}
-
-/* Responsive */
-@media (width <= 768px) {
-  .site-title {
-    font-size: 1.5rem;
-  }
-
-  .hero h2 {
-    font-size: 2rem;
-  }
-
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
+.markdown-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
 }
