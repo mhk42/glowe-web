@@ -113,20 +113,14 @@
             <a href="#contact" onclick="renderPage('contact')" class="header-nav-link text-gray-700">Contact</a>
           </nav>
 
-          <!-- Icons (Placeholder) -->
+          <!-- Icons: Cart is functional; search icon removed per request -->
           <div class="flex items-center space-x-4">
+            <!-- Shopping Cart: opens the cart page -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 text-gray-700 cursor-pointer"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+              onclick="renderPage('cart')"
+              role="button"
+              aria-label="Open cart"
               class="h-6 w-6 text-gray-700 cursor-pointer"
               fill="none"
               viewBox="0 0 24 24"
@@ -461,6 +455,64 @@
                     </div>
                 </div>
             `,
+        cart: `
+        <!-- Cart Page Content -->
+        <header class="text-center py-16 max-w-7xl mx-auto px-4">
+          <h1 class="page-header text-5xl font-light text-gray-800 mb-4">Your Cart</h1>
+          <p class="text-lg text-gray-600 font-serif font-light">Review items and proceed to checkout.</p>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-6">
+          <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <!-- Left: Cart Items (span 2) -->
+              <div class="md:col-span-2">
+                <h2 class="text-lg font-medium mb-4">Items in your cart</h2>
+                <div id="cart-contents" class="space-y-4">
+                  <div id="cart-empty" class="text-gray-600 py-12 text-center">
+                    <p class="text-xl">Your cart is currently empty.</p>
+                    <p class="mt-2 text-sm">Add items from the <a href="#shop" onclick="renderPage('shop')" class="text-gray-800 underline">Shop</a> to get started.</p>
+                  </div>
+
+                  <!-- Example item template (hidden unless populated by a cart system) -->
+                  <div class="hidden" id="cart-item-template">
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-md border border-gray-100">
+                      <img src="./images/cleansing-balm.jpeg" alt="product" class="w-20 h-20 object-cover rounded-md border border-gray-100">
+                      <div class="flex-1">
+                        <h3 class="font-medium text-gray-800">Product Name</h3>
+                        <p class="text-sm text-gray-500">Variant / Size</p>
+                        <div class="mt-2 flex items-center space-x-2">
+                          <button class="px-2 py-1 border rounded text-sm">-</button>
+                          <span class="text-sm">1</span>
+                          <button class="px-2 py-1 border rounded text-sm">+</button>
+                          <button class="ml-4 text-sm text-red-500">Remove</button>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <p class="font-semibold text-gray-800">$0.00</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Order Summary -->
+              <aside class="md:col-span-1">
+                <div class="bg-gray-50 p-4 rounded-md border border-gray-100 sticky top-24">
+                  <h3 class="font-medium text-gray-800 mb-4">Order Summary</h3>
+                  <div class="flex justify-between text-gray-600 mb-2"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+                  <div class="flex justify-between text-gray-600 mb-2"><span>Shipping</span><span id="cart-shipping">—</span></div>
+                  <div class="flex justify-between font-semibold text-gray-800 text-lg mb-4"><span>Total</span><span id="cart-total">$0.00</span></div>
+                  <button id="checkout-button" class="w-full py-3 bg-gray-800 text-white rounded-md hover:bg-gray-700 mb-3">Proceed to Checkout</button>
+                  <a href="#shop" onclick="renderPage('shop')" class="block text-center py-3 border border-gray-300 rounded-md hover:bg-gray-50">Continue Shopping</a>
+                </div>
+              </aside>
+
+            </div>
+          </div>
+        </div>
+      `,
         story: `
                 <!-- Our Story Page Content -->
                 <header class="text-center py-16 max-w-4xl mx-auto px-4">
@@ -661,6 +713,172 @@
             `,
       };
 
+      // ---------------------
+      // Simple client-side cart
+      // ---------------------
+      const CART_KEY = 'glowe_cart_v1';
+
+      function loadCart() {
+        try {
+          const raw = localStorage.getItem(CART_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveCart(cart) {
+        try {
+          localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        } catch (e) {
+          console.warn('Could not save cart', e);
+        }
+      }
+
+      function addToCart(item) {
+        const cart = loadCart();
+        // simple dedupe by id
+        const existing = cart.find((c) => c.id === item.id);
+        if (existing) {
+          existing.qty = (existing.qty || 1) + (item.qty || 1);
+        } else {
+          cart.push(Object.assign({ qty: 1 }, item));
+        }
+        saveCart(cart);
+      }
+
+      function computeTotal(cart) {
+        return cart.reduce((s, it) => s + (Number(it.price) || 0) * (it.qty || 1), 0);
+      }
+
+      /**
+       * Renders the cart page into the app container. Uses localStorage for persistence.
+       */
+      function renderCart() {
+        const cartItems = loadCart();
+        const total = computeTotal(cartItems);
+
+        // Build cart items HTML
+        const cartItemsHtml = cartItems
+          .map(
+            (it, idx) => `
+            <div class="flex items-center justify-between p-4 bg-white rounded-md border border-gray-100">
+              <div class="flex items-center space-x-4">
+                <img src="${it.image || './images/cleansing-balm.jpeg'}" alt="${it.name}" class="w-20 h-20 object-cover rounded-md border border-gray-100">
+                <div>
+                  <h3 class="font-medium text-gray-800">${it.name}</h3>
+                  <p class="text-sm text-gray-500">${it.variant || ''}</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-4">
+                <div class="flex items-center border rounded-md overflow-hidden">
+                  <button data-action="dec" data-idx="${idx}" class="px-3 py-1 text-sm">−</button>
+                  <div class="px-3">${it.qty}</div>
+                  <button data-action="inc" data-idx="${idx}" class="px-3 py-1 text-sm">+</button>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gray-800">$${((it.price || 0) * (it.qty || 1)).toFixed(2)}</div>
+                  <button data-action="remove" data-idx="${idx}" class="text-sm text-red-500 mt-1">Remove</button>
+                </div>
+              </div>
+            </div>
+          `
+          )
+          .join('');
+
+        // Build full page
+        const html = `
+                <!-- Cart Page Content -->
+                <header class="text-center py-16 max-w-4xl mx-auto px-4">
+                    <h1 class="page-header text-5xl font-light text-gray-800 mb-4">Your Shopping Cart</h1>
+                    <p class="text-lg text-gray-600 font-serif font-light">${cartItems.length} items in your basket.</p>
+                </header>
+
+                <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-10">
+
+                    <!-- Cart Items List (Column 1 & 2) -->
+                    <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <div id="cart-list">
+                            ${
+                              cartItems.length
+                                ? cartItemsHtml
+                                : `
+                              <div class="text-center py-12 text-gray-600">
+                                <p class="text-xl">Your cart is currently empty.</p>
+                                <p class="mt-2 text-sm">Add items from the shop to get started.</p>
+                                <div class="mt-6">
+                                  <a href="#shop" onclick="renderPage('shop')" class="inline-block px-6 py-3 bg-gray-800 text-white rounded-md">Start Shopping</a>
+                                </div>
+                              </div>
+                            `
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Summary & Checkout (Column 3) -->
+                    <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-md border border-gray-100 h-fit">
+                        <h2 class="text-xl font-semibold mb-6 border-b pb-3">Order Summary</h2>
+
+                        <div class="space-y-3 text-sm text-gray-600">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>$${total.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping</span>
+                                <span>$5.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-bold text-gray-800 pt-3 border-t">
+                                <span>Order Total</span>
+                                <span>$${(total + 5.0).toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <button id="checkout-button" class="mt-8 w-full py-3 bg-gray-800 text-white text-sm font-semibold uppercase tracking-widest rounded-md hover:bg-gray-700 transition duration-300">
+                            Proceed to Checkout
+                        </button>
+
+                        <!-- 'Continue Shopping' is functional via renderPage('shop') -->
+                        <a href="#shop" onclick="renderPage('shop')" class="block text-center mt-4 text-sm text-gray-500 hover:text-gray-800 transition">
+                            ← Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            `;
+
+        app.innerHTML = html;
+
+        // Attach handlers for quantity/remove
+        const cartList = document.getElementById('cart-list');
+        if (cartList && cartItems.length) {
+          cartList.querySelectorAll('[data-action]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+              const action = btn.getAttribute('data-action');
+              const idx = Number(btn.getAttribute('data-idx'));
+              const cart = loadCart();
+              if (!cart[idx]) return;
+              if (action === 'inc') {
+                cart[idx].qty = (cart[idx].qty || 1) + 1;
+              } else if (action === 'dec') {
+                cart[idx].qty = Math.max(1, (cart[idx].qty || 1) - 1);
+              } else if (action === 'remove') {
+                cart.splice(idx, 1);
+              }
+              saveCart(cart);
+              renderCart();
+            });
+          });
+        }
+
+        // Checkout button behavior (placeholder)
+        const checkoutBtn = document.getElementById('checkout-button');
+        if (checkoutBtn) {
+          checkoutBtn.addEventListener('click', () => {
+            alert('Proceeding to checkout — implement integration as needed.');
+          });
+        }
+      }
+
       // =======================================================
       // PAGE RENDERING AND INITIAL LOAD LOGIC
       // =======================================================
@@ -669,12 +887,23 @@
        * Renders the specified page content into the main application div.
        * @param {string} pageKey - The key of the page content to load.
        */
-      function renderPage(pageKey) {
+      function renderPage(pageKey, options = {}) {
+        // options.addToHistory: default true. When false, do not push a history entry
+        const addToHistory = options.addToHistory !== false;
+
+        // Special-case the cart page so we can render dynamic cart state
+        if (pageKey === 'cart') {
+          window.scrollTo(0, 0);
+          if (addToHistory) history.pushState(null, null, `#${pageKey}`);
+          renderCart();
+          return;
+        }
+
         const content = pageContents[pageKey];
         if (content) {
           app.innerHTML = content;
           window.scrollTo(0, 0); // Scroll to top on page change
-          history.pushState(null, null, `#${pageKey}`);
+          if (addToHistory) history.pushState(null, null, `#${pageKey}`);
 
           if (pageKey === 'shop') {
             // Ensures the filter is set to 'All Products' immediately after rendering the grid.
@@ -685,8 +914,36 @@
           }
         } else {
           app.innerHTML = '<div class="text-center py-20 text-xl text-red-500">Page not found.</div>';
+          if (addToHistory) history.pushState(null, null, `#${pageKey}`);
         }
       }
+
+      // Handle browser back/forward navigation. When the user navigates via
+      // the browser controls we should render the page for the current hash
+      // without pushing another history entry.
+      window.addEventListener('popstate', () => {
+        const hash = window.location.hash ? window.location.hash.substring(1) : 'home';
+        if (hash === '') {
+          renderPage('home', { addToHistory: false });
+          return;
+        }
+        // If the hash corresponds to a known page or the cart, render it
+        if (pageContents[hash] || hash === 'cart') {
+          renderPage(hash, { addToHistory: false });
+        } else {
+          renderPage('home', { addToHistory: false });
+        }
+      });
+
+      // Also respond to direct hash changes (safer for some navigation cases)
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash ? window.location.hash.substring(1) : 'home';
+        if (pageContents[hash] || hash === 'cart') {
+          renderPage(hash, { addToHistory: false });
+        } else {
+          renderPage('home', { addToHistory: false });
+        }
+      });
 
       // --- Initial Load Logic ---
 
