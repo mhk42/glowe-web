@@ -7,4 +7,4 @@ showcases the brand's aesthetic and products in a clean, modern layout.
 ## Live Demo
 
 Explore the website here:
-[Glowe Skincare Website](https://mhk42.github.io/glowe-web/#home)
+[Glowe Skincare Website](https://mhk42.github.io/glowe-web/)
